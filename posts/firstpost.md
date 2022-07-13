@@ -1,26 +1,13 @@
 ---
-title: This is my first post.
-description: This is a post on My Blog about agile frameworks.
-date: 2018-05-01
+title: Choosing Suitable Technology.
+description: This is a post about choosing the right technology for the job.
+date: 2022-07-01
 tags:
-  - another tag
+  - html
+  - css
+  - javascript
+  - techstack
 layout: layouts/post.njk
 ---
-Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.
 
-Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.
-
-## Section Header
-
-Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.
-
-```diff-js
-// this is a command
-function myCommand() {
-+	let counter = 0;
-+	counter++;
-}
-
-// Test with a line break above this line.
-console.log('Test');
-```
+You're given the task of creating a site for a company. Before you can start coding, you need to understand all the requirements needed for the task. Once you know all of that, then you have to choose all the right technologies that fit all the necessary requirements. If you're building just a basic site, some informational, you can build it from scratch with a number of tech like React, Angular, or even more simply, HTML, plus whatever tech you will use for styling, such as CSS or styled-components. If you're showcasing products, then using something like Shopify might be better suited. Much like the amount of technologies to choose from, your list of requirements is both ever-evolving and not exhaustive.
