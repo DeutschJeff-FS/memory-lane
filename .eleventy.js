@@ -9,23 +9,54 @@ const pluginRss = require("@11ty/eleventy-plugin-rss");
 const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const pluginNavigation = require("@11ty/eleventy-navigation");
 
-async function imageShortcode(src, alt, sizes) {
+async function imageShortcode(src, alt, sizes = "100vw") {
+  if (alt === undefined) {
+    // You bet we throw an error on missing alt (alt="" works okay)
+    throw new Error(`Missing \`alt\` on responsiveimage from: ${src}`);
+  }
+
   let metadata = await Image(src, {
-    width: [300],
-    formats: ["webp"],
+    widths: [300, 600],
+    formats: ["webp", "jpeg"],
   });
 
-  let imageAttributes = {
-    alt,
-    sizes,
-    loading: "lazy",
-    decoding: "async",
-  };
+  let lowsrc = metadata.jpeg[0];
+  let highsrc = metadata.jpeg[metadata.jpeg.length - 1];
 
-  return Image.generateHTML(metadata, imageAttributes, {
-    whitespaceMode: "inline",
-  });
+  return `<picture>
+    ${Object.values(metadata)
+      .map((imageFormat) => {
+        return `  <source type="${imageFormat[0].sourceType}" srcset="${imageFormat
+          .map((entry) => entry.srcset)
+          .join(", ")}" sizes="${sizes}">`;
+      })
+      .join("\n")}
+      <img
+        src="${lowsrc.url}"
+        width="${highsrc.width}"
+        height="${highsrc.height}"
+        alt="${alt}"
+        loading="lazy"
+        decoding="async">
+    </picture>`;
 }
+// async function imageShortcode(src, alt, sizes) {
+//   let metadata = await Image(src, {
+//     widths: [null],
+//     formats: ["webp"],
+//   });
+
+//   let imageAttributes = {
+//     alt,
+//     sizes,
+//     loading: "lazy",
+//     decoding: "async",
+//   };
+
+//   return Image.generateHTML(metadata, imageAttributes, {
+//     whitespaceMode: "inline",
+//   });
+// }
 
 module.exports = function (eleventyConfig) {
   // Copy the `img` and `css` folders to the output
@@ -41,9 +72,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addNunjucksAsyncShortcode("image", imageShortcode);
 
   eleventyConfig.addFilter("readableDate", (dateObj) => {
-    return DateTime.fromJSDate(dateObj, { zone: "utc" }).toFormat(
-      "dd LLL yyyy"
-    );
+    return DateTime.fromJSDate(dateObj, { zone: "utc" }).toFormat("dd LLL yyyy");
   });
 
   // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-date-string
@@ -69,9 +98,7 @@ module.exports = function (eleventyConfig) {
   });
 
   function filterTagList(tags) {
-    return (tags || []).filter(
-      (tag) => ["all", "nav", "post", "posts"].indexOf(tag) === -1
-    );
+    return (tags || []).filter((tag) => ["all", "nav", "post", "posts"].indexOf(tag) === -1);
   }
 
   eleventyConfig.addFilter("filterTagList", filterTagList);
