@@ -20,12 +20,16 @@ Deploy a site to Netlify or Heroku using either Eleventy or Hugo for static site
 
 ### Week 2
 
-Add a fourth post with one picture
+Add a fourth post with one image
 
 ---
 
 ### Week 3
 
-Add a fifth post with one picture
+Add a fifth post with one image
 
 ---
+
+### Week 4
+
+Add a sixth post with one image
